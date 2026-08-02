@@ -2,6 +2,7 @@ const db = require("../../db");
 const queries = require("./queries");
 
 // Get all products
+
 const getProducts = (req, res) => {
     db.query(queries.getProducts, (error, results) => {
         if (error) {
