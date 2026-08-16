@@ -28,6 +28,34 @@ const getProducts = (req, res) => {
     }
 };
 
+// GET - Retrieve distinct product names for drop-down list
+const getDistinctProductNames = (req, res) => {
+    db.query(queries.getDistinctProductNames, (error, results) => {
+        if (error) {
+            throw error;
+        }
+
+        res.status(200).json(results.rows);
+    });
+};
+
+// GET - Retrieve one product by product name
+const getProductByName = (req, res) => {
+    const { name } = req.params;
+
+    db.query(
+        queries.getProductByName,
+        [name],
+        (error, results) => {
+            if (error) {
+                throw error;
+            }
+
+            res.status(200).json(results.rows[0]);
+        }
+    );
+};
+
 // POST - Add a product
 const addProduct = (req, res) => {
     const { product_name, category, price, quantity } = req.body;
@@ -66,6 +94,10 @@ const updateProduct = (req, res) => {
 
 module.exports = {
     getProducts,
+    getDistinctProductNames,
+    getProductByName,
     addProduct,
     updateProduct,
+    
+
 };
